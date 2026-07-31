@@ -1,8 +1,9 @@
 function Header() {
   return (
-    <header>
+    <header className="header">
       <h1>PostVault</h1>
-      <p>Redux Toolkit Post Manager</p>
+
+      <p>Redux Toolkit Content Manager</p>
     </header>
   );
 }

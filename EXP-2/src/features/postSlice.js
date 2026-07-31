@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  posts: [],
+  items: [],
+  editingPost: null,
 };
 
 const postSlice = createSlice({
@@ -11,26 +12,40 @@ const postSlice = createSlice({
 
   reducers: {
     addPost: (state, action) => {
-      state.posts.push({
+      const newPost = {
         id: Date.now(),
-        text: action.payload,
-      });
+        text: action.payload.text,
+        platform: action.payload.platform,
+      };
+
+      state.items.push(newPost);
     },
 
     deletePost: (state, action) => {
-      state.posts = state.posts.filter(
+      state.items = state.items.filter(
         (post) => post.id !== action.payload
       );
     },
 
+    startEditing: (state, action) => {
+      state.editingPost = action.payload;
+    },
+
+    clearEditing: (state) => {
+      state.editingPost = null;
+    },
+
     updatePost: (state, action) => {
-      const post = state.posts.find(
+      const post = state.items.find(
         (post) => post.id === action.payload.id
       );
 
       if (post) {
         post.text = action.payload.text;
+        post.platform = action.payload.platform;
       }
+
+      state.editingPost = null;
     },
   },
 });
@@ -38,6 +53,8 @@ const postSlice = createSlice({
 export const {
   addPost,
   deletePost,
+  startEditing,
+  clearEditing,
   updatePost,
 } = postSlice.actions;
 

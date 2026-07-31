@@ -1,57 +1,67 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { addPost, updatePost } from "../features/postSlice";
 
 function PostEditor() {
-  const [text, setText] = useState("");
-  const [editingId, setEditingId] = useState(null);
-
   const dispatch = useDispatch();
 
-  const handleSave = () => {
+  const platform = useSelector(
+    (state) => state.platform.selectedPlatform
+  );
+
+  const editingPost = useSelector(
+    (state) => state.posts.editingPost
+  );
+
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (editingPost) {
+      setText(editingPost.text);
+    }
+  }, [editingPost]);
+
+  const handleSubmit = () => {
     if (text.trim() === "") {
       alert("Please enter a post.");
       return;
     }
 
-    if (editingId === null) {
-      dispatch(addPost(text));
-    } else {
+    if (editingPost) {
       dispatch(
         updatePost({
-          id: editingId,
-          text: text,
+          id: editingPost.id,
+          text,
+          platform,
         })
       );
-
-      setEditingId(null);
+    } else {
+      dispatch(
+        addPost({
+          text,
+          platform,
+        })
+      );
     }
 
     setText("");
   };
 
-  const handleClear = () => {
-    setText("");
-    setEditingId(null);
-  };
-
   return (
-    <div className="editor">
+    <div className="section">
+      <label>Write Post</label>
+
       <textarea
-        placeholder="Write your post here..."
+        rows="5"
+        placeholder="Write something..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></textarea>
 
-      <div className="buttons">
-        <button onClick={handleSave}>
-          {editingId === null ? "Save Post" : "Update Post"}
-        </button>
-
-        <button onClick={handleClear}>
-          Clear
-        </button>
-      </div>
+      <button onClick={handleSubmit}>
+        {editingPost ? "Update Post" : "Save Post"}
+      </button>
     </div>
   );
 }
