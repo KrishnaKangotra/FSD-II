@@ -1,0 +1,58 @@
+.container {
+  width: 70%;
+  margin: 30px auto;
+  background: white;
+  border: 1px solid #cccccc;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-bottom: 5px;
+}
+
+header p {
+  color: #555;
+}
+
+.editor textarea {
+  width: 100%;
+  height: 140px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  border: 1px solid #999;
+}
+
+.buttons {
+  margin-top: 15px;
+}
+
+.buttons button {
+  padding: 8px 18px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.post-list {
+  margin-top: 30px;
+}
+
+.post-card {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.post-card p {
+  margin-bottom: 10px;
+}
+
+.post-card button {
+  padding: 6px 14px;
+  cursor: pointer;
+}
